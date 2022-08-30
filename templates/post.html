@@ -1,0 +1,39 @@
+{% extends 'base_post.html'%}
+{% block content %}
+{% load static %}
+<script src="{% static 'js/jquery-3.6.0.js' %}"></script>
+<script src="{% static 'js/likes_dislikes.js' %}"></script>
+<a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{%url 'post'%}" class="nav-link">Post</a></li>
+        <li class="nav-item"><a href="{%url 'create_post'%}" class="nav-link">Create post</a></li>
+      </ul>
+    </header><use xlink:href="#bootstrap"></use></svg>
+      </a>
+<ul>
+    {% for p in post %}
+    <li>
+        <h2>{{p.description}}</h2>
+        {%for image in images %}
+         {% if image.post_id == p.pk %}
+          <p><img class="thumb"width="390"  src="{{ image.images.url }}">
+         {% endif %}
+        {% endfor %}
+        </p>
+
+    <li>tags: {{p.tags }}</li>
+    <li>author: {{p.user }}
+    <p class="link-read-post"><a href="{% url 'user_view' p.user.id %}">User profile</a> </p></li>
+    <form action=""
+          method="post" onsubmit="return false;">
+        {% csrf_token %}
+        {% check_likes p.pk user as check_val %}
+        <button type="submit" name="post.id" value="{{ p.pk }}" id="button{{p.pk}}"
+                class="btn btn-primary btn-sm">{{ check_val}}</button>
+        <span id="quantity{{p.pk}}" style="padding-left: 4px;">{{p.quantity_likes}}</span>
+    </form>
+    <hr>
+    {% endfor %}
+</ul>
+{% endblock %}

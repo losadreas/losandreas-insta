@@ -1,0 +1,26 @@
+{% extends 'base_post.html'%}
+{% block content %}
+<a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{%url 'post'%}" class="nav-link">Post</a></li>
+        <li class="nav-item"><a href="{%url 'create_post'%}" class="nav-link">Create post</a></li>
+      </ul>
+    </header><use xlink:href="#bootstrap"></use></svg>
+      </a>
+<ul>
+    <li>
+        <h2>{{user_view.username}}</h2>
+        {% if user_view.avatar %}
+         <p><img class="img-article-left thumb"width="500"  src="{{user_view.avatar.url}}"></p>
+        {% endif %}
+
+    <li>Bio: {{user_view.bio }}</li>
+    <li>First name: {{user_view.first_name }}</li>
+    <li>Last name: {{user_view.last_name }}</li>
+    <hr>
+    {% if user == user_view %}
+    <li><a href="{%url 'addition_info'%}">Change profile</a></li>
+    {% endif %}
+</ul>
+{% endblock %}
